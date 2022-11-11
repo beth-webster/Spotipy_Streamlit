@@ -1,5 +1,4 @@
 import streamlit as st
-import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
 import spotipy
@@ -10,7 +9,6 @@ from helper_functions import id_from_url, get_artists, convert_df_csv, playlist_
 
 st.set_page_config(layout="wide")
 plt.style.use('seaborn-poster')
-sns.set_context('poster')
 
 
 header = st.container()
