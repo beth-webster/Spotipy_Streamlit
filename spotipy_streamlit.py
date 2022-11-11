@@ -1,5 +1,4 @@
 import streamlit as st
-import matplotlib.pyplot as plt
 import pandas as pd
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
@@ -8,8 +7,6 @@ from helper_functions import id_from_url, get_artists, convert_df_csv, playlist_
 
 
 st.set_page_config(layout="wide")
-plt.style.use('seaborn-poster')
-
 
 header = st.container()
 track_data = st.container()
