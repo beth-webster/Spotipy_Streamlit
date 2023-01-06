@@ -21,6 +21,15 @@ def get_artists(results):
     artists = '/'.join([str(artist) for artist in artist_list])
     return artists
 
+def get_copyright(results):
+    copyright_list = []
+    for copyright in results['copyrights']:
+        for key in copyright:
+                if key == 'text':
+                    copyright_list.append((copyright[key]))
+    copyrights = '/'.join([str(copyright) for copyright in copyright_list])
+    return copyrights
+
 @st.cache
 def convert_df_csv(df):
     return df.to_csv()
