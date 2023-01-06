@@ -3,7 +3,7 @@ import pandas as pd
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 from PIL import Image
-from helper_functions import id_from_url, get_artists, convert_df_csv, playlist_results, album_results, track_results
+from helper_functions import id_from_url, get_artists, get_copyright, convert_df_csv, playlist_results, album_results, track_results
 
 
 st.set_page_config(layout="wide")
@@ -98,8 +98,9 @@ if len(client_id) > 25 and len(client_secret) > 25 :
                 bundle_rel_date = results.get('release_date')
                 bundle_title = results.get('name')
                 bundle_artists = get_artists(results) 
-                bundle_rows.append([bundle_upc, bundle_title, bundle_artists, bundle_rel_date, label])
-                df = pd.DataFrame(bundle_rows, columns = ["UPC", "Title", "Artist","Release Date", "Label"])
+                bundle_copyright = get_copyright(results)
+                bundle_rows.append([bundle_upc, bundle_title, bundle_artists, bundle_rel_date, label, bundle_copyright])
+                df = pd.DataFrame(bundle_rows, columns = ["UPC", "Title", "Artist","Release Date", "Label", "Copyright"])
 
             elif url_type == 'playlist':
                 results = playlist_results(sp, id)
@@ -113,6 +114,7 @@ if len(client_id) > 25 and len(client_secret) > 25 :
                             bundle_artists = get_artists(album_results_playlist)
                             bundle_upc = album_results_playlist['external_ids'].get('upc')
                             bundle_label = album_results_playlist.get('label')
+                            bundle_copyright = get_copyright(album_results_playlist)
                         else:
                             bundle_class = '-'
                             bundle_artists = '-'
@@ -125,8 +127,9 @@ if len(client_id) > 25 and len(client_secret) > 25 :
                         bundle_title = '-'
                         bundle_upc = '-'
                         bundle_label = '-'
-                    bundle_rows.append([bundle_class, bundle_upc,  bundle_title, bundle_artists, bundle_label])
-                df = pd.DataFrame(bundle_rows, columns = ["Class", "UPC", "Title", "Artist", "Label"])
+                        bundle_copyright = '-'
+                    bundle_rows.append([bundle_class, bundle_upc,  bundle_title, bundle_artists, bundle_label, bundle_copyright])
+                df = pd.DataFrame(bundle_rows, columns = ["Class", "UPC", "Title", "Artist", "Label", "Copyright"])
             
             elif url_type == 'track':
                 results = track_results(sp,id)
@@ -136,9 +139,10 @@ if len(client_id) > 25 and len(client_secret) > 25 :
                 label = results_bundle.get('label')
                 bundle_rel_date = results_bundle.get('release_date')
                 bundle_title = results_bundle.get('name')
-                bundle_artists = get_artists(results_bundle) 
-                bundle_rows.append([bundle_upc, bundle_title, bundle_artists, bundle_rel_date, label])
-                df = pd.DataFrame(bundle_rows, columns = ["UPC", "Title", "Artist","Release Date", "Label"])
+                bundle_artists = get_artists(results_bundle)
+                bundle_copyright = get_copyright(results_bundle) 
+                bundle_rows.append([bundle_upc, bundle_title, bundle_artists, bundle_rel_date, label, bundle_copyright])
+                df = pd.DataFrame(bundle_rows, columns = ["UPC", "Title", "Artist","Release Date", "Label", "Copyright"])
 
             else:
                 st.write('only Album, Playlist or Track links are currently supported')
