@@ -18,7 +18,7 @@ st.sidebar.image(image)
 
 
 client_id = st.sidebar.text_input("Enter client ID:", "")
-client_secret = st.sidebar.text_input("Enter client secret:", "")
+client_secret = st.sidebar.text_input("Enter client secret:", type="password")
 
 if len(client_id) > 25 and len(client_secret) > 25 :
     sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials(client_id = client_id,
