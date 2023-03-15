@@ -84,6 +84,7 @@ def album_upc_lab_date_title_artitst_copy(album_info):
     bundle_title = album_info.get('name')
     bundle_artists = get_artists(album_info) 
     bundle_copyright = get_copyright(album_info)
+    bundle_url = album_info['external_urls'].get('spotify')
     num_tracks = album_info.get('total_tracks')
     if int(num_tracks)>4:
         price = 425
@@ -91,7 +92,7 @@ def album_upc_lab_date_title_artitst_copy(album_info):
     else:
         price = 40
         bundle_class = "S"
-    return bundle_upc, label, bundle_rel_date, bundle_title, bundle_artists, bundle_copyright, num_tracks, price, bundle_class
+    return bundle_upc, label, bundle_rel_date, bundle_title, bundle_artists, bundle_copyright, num_tracks, price, bundle_class, bundle_url
 
 def playlist_class_num_art_title_upc_lab_copy_url(track, sp):
     try:
@@ -125,4 +126,3 @@ def playlist_results(sp,id):
 @st.cache
 def track_results(sp,id):
     return sp.track(id, market = 'GB')
-
