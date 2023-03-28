@@ -299,7 +299,6 @@ if url_ready == 1:
                                                              , " "
                                                              , "  "
                                                              , "Number of Tracks"])
-            file_bundle_df = pd.DataFrame(file_bundle_rows)
 
             st.dataframe(bundle_df)
    
@@ -424,18 +423,21 @@ if url_ready == 1:
     with file_buttons:
         st.write('Download Data')
         
+        # Creates a button to download bundle data as CSV
         bundle_csv = convert_df_csv(file_bundle_df)
         st.download_button(label = "Download bundle data as CSV"
                         , data = bundle_csv
                         , file_name = 'bundle_data.csv'
                         , mime = 'text/csv')
         
+        # Creates a button to download track data as CSV
         track_csv = convert_df_csv(file_track_df)
         st.download_button(label = "Download track data as CSV"
                         , data = track_csv
                         , file_name = 'track_data.csv'
                         , mime = 'text/csv')  
         
+        # Creates a button to download tracklisting data as CSV
         tracklisting_csv = convert_df_csv(file_tracklisting_df)
         st.download_button(label = "Download tracklisting data as CSV"
                         , data = tracklisting_csv
