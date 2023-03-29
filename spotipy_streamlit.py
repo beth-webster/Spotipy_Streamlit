@@ -145,7 +145,7 @@ if url_ready == 1:
                 bundle_class = "A"
             else:
                 price = 40
-                burndle_class = "S"
+                bundle_class = "S"
             bundle_rows.append([upc
                                 , ""
                                 , title
