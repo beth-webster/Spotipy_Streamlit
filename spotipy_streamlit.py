@@ -163,6 +163,7 @@ if url_ready == 1:
                                 , ""
                                 , ""
                                 , numtracks])
+            barcodes.append([upc])
             bundle_df = pd.DataFrame(bundle_rows, columns = ["UPC"
                                                              , ""
                                                              , "Title"
@@ -403,6 +404,7 @@ if url_ready == 1:
                                 , ""
                                 , ""
                                 , numtracks])
+            barcodes.append([upc])
             bundle_df = pd.DataFrame(bundle_rows, columns = ["UPC"
                                                              , ""
                                                              , "Title"
