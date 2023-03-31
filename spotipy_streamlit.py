@@ -53,6 +53,7 @@ tracklisting_rows = []
 file_track_rows = []
 file_bundle_rows = []
 file_tracklisting_rows = []
+barcodes = []
 
 try:
     # Establish API connection with Spotipy
@@ -264,6 +265,7 @@ if url_ready == 1:
                                 , ""
                                 , ""
                                 , numtracks])
+                barcodes.append([upc])
             file_track_df = pd.DataFrame(file_track_rows)
             file_bundle_df = pd.DataFrame(bundle_rows)
             file_tracklisting_df = pd.DataFrame(file_tracklisting_rows)
@@ -443,3 +445,8 @@ if url_ready == 1:
                         , data = tracklisting_csv
                         , file_name = 'tracklisting_data.csv'
                         , mime = 'text/csv')
+        
+        flat_barcodes = [item for sublist in barcodes for item in sublist]
+        padded_barcodes = [str(num).zfill(13) for num in flat_barcodes]        
+        held_bundle_search = ','.join([f"'{num}'" for num in padded_barcodes])        
+        st.download_button("Download 13 digit barcodes for a search in held", held_bundle_search)
