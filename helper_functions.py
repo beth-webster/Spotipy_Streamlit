@@ -109,3 +109,10 @@ def playlist_bundleid(track):
 def track_bundleid(track_info):
     bundleid = track_info['album'].get('id')
     return bundleid
+
+def create_code_txt(barcodes):
+    flat_barcodes = [item for sublist in barcodes for item in sublist]
+    padded_barcodes = [str(num).zfill(13) for num in flat_barcodes]        
+    delimited_barcodes = ',\n'.join([f"'{num}'" for num in padded_barcodes])
+    held_bundle_search = (f"select *\nfrom held_candidate_bundles\nwhere barcode in ({delimited_barcodes})")
+    return held_bundle_search

@@ -23,7 +23,8 @@ from helper_functions import (id_from_url
                             , album_numtracks
                             , album_trackseq
                             , playlist_bundleid
-                            , track_bundleid)
+                            , track_bundleid
+                            , create_code_txt)
 
 # Set page configuration to wide for primary desktop use
 st.set_page_config(layout="wide")
@@ -446,7 +447,5 @@ if url_ready == 1:
                         , file_name = 'tracklisting_data.csv'
                         , mime = 'text/csv')
         
-        flat_barcodes = [item for sublist in barcodes for item in sublist]
-        padded_barcodes = [str(num).zfill(13) for num in flat_barcodes]        
-        held_bundle_search = ','.join([f"'{num}'" for num in padded_barcodes])        
-        st.download_button("Download 13 digit barcodes for a search in held", held_bundle_search)
+        held_bundle_search = create_code_txt(barcodes)  
+        st.download_button("Download code to search for bundles in the held table", held_bundle_search)
