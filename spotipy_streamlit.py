@@ -449,5 +449,7 @@ if url_ready == 1:
                         , file_name = 'tracklisting_data.csv'
                         , mime = 'text/csv')
         
+        st.write("Barcodes in the above files are likely to be varying lengths - reformat in excel before loading")
+        
         held_bundle_search = create_code_txt(barcodes)  
         st.download_button("Download code to search for bundles in the held table", held_bundle_search)
