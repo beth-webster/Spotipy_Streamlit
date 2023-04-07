@@ -25,43 +25,61 @@ def track_results(sp,id):
 
 @st.cache_data
 def album_upc(album_info):
-    upc = album_info['external_ids'].get('upc')
+    try:
+        upc = album_info['external_ids'].get('upc')
+    except:
+        upc = "NULL"
     return upc
 
 @st.cache_data
 def album_label(album_info):
-    label = album_info.get('label')
+    try:
+        label = album_info.get('label')
+    except:
+        label = "NULL"
     return label
 
 @st.cache_data
 def album_copyright(album_info):
     copyright_list = []
-    for copyright in album_info['copyrights']:
-        try:
-            for key in copyright:
-                try:
-                    if key == 'text':
-                        copyright_list.append((copyright[key]))
-                except:
-                    pass
-        except:
-            pass
-    copyrights = '/'.join([str(copyright) for copyright in copyright_list])
+    try:
+        for copyright in album_info['copyrights']:
+            try:
+                for key in copyright:
+                    try:
+                        if key == 'text':
+                            copyright_list.append((copyright[key]))
+                    except:
+                        pass
+            except:
+                pass
+        copyrights = '/'.join([str(copyright) for copyright in copyright_list])
+    except:
+        copyrights = []
     return copyrights
 
 @st.cache_data
 def album_reldate(album_info):
-    reldate = album_info.get('release_date')
+    try:
+        reldate = album_info.get('release_date')
+    except:
+        pass
     return reldate
 
 @st.cache_data
 def album_title(album_info):
-    title = album_info.get('name')
+    try:
+        title = album_info.get('name')
+    except:
+        title = "NULL"
     return title
 
 @st.cache_data
 def album_numtracks(album_info):
-    numtracks = album_info.get('total_tracks')
+    try:
+        numtracks = album_info.get('total_tracks')
+    except:
+        numtracks = "NULL"
     return int(numtracks)
 
 @st.cache_data
@@ -71,43 +89,61 @@ def album_trackid(track):
 
 @st.cache_data
 def album_trackseq(track):
-    trackseq = track.get('track_number')
+    try:
+        trackseq = track.get('track_number')
+    except:
+        trackseq = "NULL"
     return trackseq
 
 @st.cache_data
 def track_isrc(track_info):
-    isrc = track_info['external_ids'].get('isrc')
+    try:
+        isrc = track_info['external_ids'].get('isrc')
+    except:
+        isrc = "NULL"
     return isrc
 
 @st.cache_data
 def artists(track):
     artist_list = []
-    for artist in track['artists']:
-        try:
-            for key in artist:
-                try:
-                    if key == 'name':
-                        artist_list.append((artist[key]))
-                except:
-                    pass
-        except:
-            pass
-    artists = '/'.join([str(artist) for artist in artist_list])
+    try:
+        for artist in track['artists']:
+            try:
+                for key in artist:
+                    try:
+                        if key == 'name':
+                            artist_list.append((artist[key]))
+                    except:
+                        pass
+            except:
+                pass
+        artists = '/'.join([str(artist) for artist in artist_list])
+    except:
+        artists = []
     return artists
 
 @st.cache_data
 def track_title(track):
-    title = track.get('name')
+    try:
+        title = track.get('name')
+    except:
+        title = "NULL"
     return title
 
 @st.cache_data
 def playlist_bundleid(track):
-    bundleid = track['track']['album']['id']
+    try:
+        bundleid = track['track']['album']['id']
+    except:
+        bundleid = 0
     return bundleid
 
 @st.cache_data
 def track_bundleid(track_info):
-    bundleid = track_info['album'].get('id')
+    try:
+        bundleid = track_info['album'].get('id')
+    except:
+        bundleid = 0        
     return bundleid
 
 def create_code_txt(barcodes):

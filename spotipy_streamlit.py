@@ -95,28 +95,31 @@ if url_ready == 1:
             label = album_label(album_info)
             copyright = album_copyright(album_info)
             for track in album_tracklist_info:
-                title = track_title(track)
-                artist = artists(track)
-                trackid = album_trackid(track)
-                track_info = track_results(sp, trackid)
-                isrc = track_isrc(track_info)
-                trackseq = album_trackseq(track)
-                track_rows.append([isrc
-                                   , ""
-                                   , title
-                                   , ""
-                                   , artist
-                                   , ""
-                                   , label
-                                   , label
-                                   , label
-                                   , copyright
-                                   , "40"])
-                tracklisting_rows.append([upc
-                                          , isrc
-                                          , 1
-                                          , 1
-                                          , trackseq])
+                try:
+                    title = track_title(track)
+                    artist = artists(track)
+                    trackid = album_trackid(track)
+                    track_info = track_results(sp, trackid)
+                    isrc = track_isrc(track_info)
+                    trackseq = album_trackseq(track)
+                    track_rows.append([isrc
+                                    , ""
+                                    , title
+                                    , ""
+                                    , artist
+                                    , ""
+                                    , label
+                                    , label
+                                    , label
+                                    , copyright
+                                    , "40"])
+                    tracklisting_rows.append([upc
+                                            , isrc
+                                            , 1
+                                            , 1
+                                            , trackseq])
+                except:
+                    pass
             track_df = pd.DataFrame(track_rows, columns = ["ISRC"
                                                            , ""
                                                            , "Title"
@@ -200,47 +203,53 @@ if url_ready == 1:
 
                 # Data for files
                 bundleid = playlist_bundleid(track)
-                album_info = album_results(sp,bundleid)
-                album_tracklist_info = album_info['tracks']['items']
+                try:
+                    album_info = album_results(sp,bundleid)
+                    album_tracklist_info = album_info['tracks']['items']
 
-                upc = album_upc(album_info)
-                bundle_title = album_title(album_info)
-                bundle_artist = artists(album_info)
-                label = album_label(album_info)
-                copyright = album_copyright(album_info)
-                reldate = album_reldate(album_info)
-                numtracks = album_numtracks(album_info)
-                if numtracks > 4:
-                    bundle_price = 425
-                    bundle_class = "A"
-                else:
-                    bundle_price = 40
-                    bundle_class = "S"
+                    upc = album_upc(album_info)
+                    bundle_title = album_title(album_info)
+                    bundle_artist = artists(album_info)
+                    label = album_label(album_info)
+                    copyright = album_copyright(album_info)
+                    reldate = album_reldate(album_info)
+                    numtracks = album_numtracks(album_info)
+                    if numtracks > 4:
+                        bundle_price = 425
+                        bundle_class = "A"
+                    else:
+                        bundle_price = 40
+                        bundle_class = "S"
+                except:
+                    pass
 
                 for track in album_tracklist_info:
-                    file_title = track_title(track)
-                    file_artist = artists(track)
-                    trackid = album_trackid(track)
-                    track_info = track_results(sp, trackid)
-                    file_isrc = track_isrc(track_info)
-                    file_trackseq = album_trackseq(track)
-                    file_track_rows.append([file_isrc
-                                            , ""
-                                            , file_title
-                                            , ""
-                                            , file_artist
-                                            , ""
-                                            , label
-                                            , label
-                                            , label
-                                            , copyright
-                                            , "40"])
-                    file_tracklisting_rows.append([upc
-                                                   , file_isrc
-                                                   , 1
-                                                   , 1
-                                                   , file_trackseq])
-                
+                    try:
+                        file_title = track_title(track)
+                        file_artist = artists(track)
+                        trackid = album_trackid(track)
+                        track_info = track_results(sp, trackid)
+                        file_isrc = track_isrc(track_info)
+                        file_trackseq = album_trackseq(track)
+                        file_track_rows.append([file_isrc
+                                                , ""
+                                                , file_title
+                                                , ""
+                                                , file_artist
+                                                , ""
+                                                , label
+                                                , label
+                                                , label
+                                                , copyright
+                                                , "40"])
+                        file_tracklisting_rows.append([upc
+                                                    , file_isrc
+                                                    , 1
+                                                    , 1
+                                                    , file_trackseq])
+                    except:
+                        pass
+            
                 track_rows.append([isrc
                                    , ""
                                    , title
@@ -336,6 +345,7 @@ if url_ready == 1:
                 bundle_class = "S"
 
             for track in album_tracklist_info:
+                try:
                     file_title = track_title(track)
                     file_artist = artists(track)
                     trackid = album_trackid(track)
@@ -358,18 +368,22 @@ if url_ready == 1:
                                                    , 1
                                                    , 1
                                                    , file_trackseq])
-
-            track_rows.append([isrc
-                                , ""
-                                , title
-                                , ""
-                                , artist
-                                , ""
-                                , label
-                                , label
-                                , label
-                                , copyright
-                                , "40"])
+                except:
+                    pass
+            try:
+                track_rows.append([isrc
+                                    , ""
+                                    , title
+                                    , ""
+                                    , artist
+                                    , ""
+                                    , label
+                                    , label
+                                    , label
+                                    , copyright
+                                    , "40"])
+            except:
+                pass
             track_df = pd.DataFrame(track_rows, columns = ["ISRC"
                                                            , ""
                                                            , "Title"
