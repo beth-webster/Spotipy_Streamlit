@@ -143,6 +143,9 @@ if url_ready == 1:
 
             title = album_title(album_info)
             artist = artists(album_info)
+            
+            filename = f'{title}_{artist}'
+            
             reldate = album_reldate(album_info)
             numtracks = album_numtracks(album_info)
             if numtracks > 4:
@@ -186,14 +189,15 @@ if url_ready == 1:
 
             file_track_df = track_df.copy()
             file_bundle_df = bundle_df.copy()
-            file_tracklisting_df = tracklisting_df.copy()
+            file_tracklisting_df = tracklisting_df.copy()  
 
     elif url_type == 'playlist':
         playlist_info = playlist_results(sp,id)
         playlist_tracks_info = playlist_info['tracks']['items']
+        filename = playlist_info['name']
 
         with track_data:
-            st.write('Track Data') 
+            st.write('Track Data')
 
             for track in playlist_tracks_info:
                 # Data to display in browser
@@ -325,6 +329,8 @@ if url_ready == 1:
             title = track_title(track_info)
             artist = artists(track_info)
             isrc = track_isrc(track_info)
+            
+            filename = f'{title}_{artist}'
 
             bundleid = track_bundleid(track_info)
             album_info = album_results(sp,bundleid)
@@ -446,21 +452,21 @@ if url_ready == 1:
         bundle_csv = convert_df_csv(file_bundle_df)
         st.download_button(label = "Download bundle data as CSV"
                         , data = bundle_csv
-                        , file_name = 'bundle_data.csv'
+                        , file_name = f'{filename}_bundles.csv'
                         , mime = 'text/csv')
         
         # Creates a button to download track data as CSV
         track_csv = convert_df_csv(file_track_df)
         st.download_button(label = "Download track data as CSV"
                         , data = track_csv
-                        , file_name = 'track_data.csv'
+                        , file_name = f'{filename}_tracks.csv'
                         , mime = 'text/csv')  
         
         # Creates a button to download tracklisting data as CSV
         tracklisting_csv = convert_df_csv(file_tracklisting_df)
         st.download_button(label = "Download tracklisting data as CSV"
                         , data = tracklisting_csv
-                        , file_name = 'tracklisting_data.csv'
+                        , file_name = f'{filename}_track_listing.csv'
                         , mime = 'text/csv')
         
         st.write("Barcodes in the above files are likely to be varying lengths - reformat in excel before loading")
