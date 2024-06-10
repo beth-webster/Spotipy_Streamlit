@@ -24,7 +24,8 @@ from helper_functions import (id_from_url
                             , album_trackseq
                             , playlist_bundleid
                             , track_bundleid
-                            , create_code_txt)
+                            , create_code_txt
+                            , barcodes_13_digits)
 
 # Set page configuration to wide for primary desktop use
 st.set_page_config(layout="wide")
@@ -92,6 +93,7 @@ if url_ready == 1:
             st.write('Track Data')
 
             upc = album_upc(album_info)
+            upc = barcodes_13_digits(upc)
             label = album_label(album_info)
             copyright = album_copyright(album_info)
             for track in album_tracklist_info:
@@ -212,6 +214,7 @@ if url_ready == 1:
                     album_tracklist_info = album_info['tracks']['items']
 
                     upc = album_upc(album_info)
+                    upc = barcodes_13_digits(upc)
                     bundle_title = album_title(album_info)
                     bundle_artist = artists(album_info)
                     label = album_label(album_info)
@@ -337,6 +340,7 @@ if url_ready == 1:
             album_tracklist_info = album_info['tracks']['items']
 
             upc = album_upc(album_info)
+            upc = barcodes_13_digits(upc)
             bundle_title = album_title(album_info)
             bundle_artist = artists(album_info)
             label = album_label(album_info)
@@ -469,7 +473,6 @@ if url_ready == 1:
                         , file_name = f'{filename}_track_listing.csv'
                         , mime = 'text/csv')
         
-        st.write("Barcodes in the above files are likely to be varying lengths - reformat in excel before loading")
         
         held_bundle_search = create_code_txt(barcodes)  
         st.download_button("Download code to search for bundles in the held table", held_bundle_search)

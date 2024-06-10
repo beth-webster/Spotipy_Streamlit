@@ -146,17 +146,22 @@ def track_bundleid(track_info):
         bundleid = 0        
     return bundleid
 
+def barcodes_13_digits(barcode):
+    str_bar = str(barcode)
+    str_bar = str_bar.zfill(13)
+    if len(str_bar) > 13:
+        # If the number is longer than 13 digits, trim any leading zeros
+        str_bar = str_bar.lstrip('0')
+        str_bar = str_bar.zfill(13)
+    return str_bar
+    
+
 def create_code_txt(barcodes):
     flat_barcodes = [item for sublist in barcodes for item in sublist]
     padded_barcodes = []
-    for num in flat_barcodes:
-        str_num = str(num)
-        str_num = str_num.zfill(13)
-        if len(str_num) > 13:
-            # If the number is longer than 13 digits, trim any leading zeros
-            str_num = str_num.lstrip('0')
-            str_num = str_num.zfill(13)
-        padded_barcodes.append(str_num)
+    for barcode in flat_barcodes:
+        str_bar = barcodes_13_digits(barcode)
+        padded_barcodes.append(str_bar)
     delimited_barcodes = ',\n'.join([f"'{num}'" for num in padded_barcodes])
     held_bundle_search = (f"select *\nfrom held_candidate_bundles\nwhere barcode in ({delimited_barcodes})")
     return held_bundle_search
