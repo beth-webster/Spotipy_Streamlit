@@ -2,6 +2,13 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 
+def less_than_half_prev(df, comparrison_col):
+    df_below = df[df[comparrison_col]!=0]
+    df_below = df[df[comparrison_col]<50]
+    df_below[comparrison_col] = (df_below[comparrison_col].astype(int)).astype(str) + '%'
+    df_below = df_below[["LWPOSN", "POSITION", "TITLE", "ARTIST", "LABEL", "FRI YT", "SAT YT", "SUN YT", "MON YT", "TUE YT", "WED YT", "THU YT", comparrison_col]]
+    return df_below
+
 # Set page configuration to wide for primary desktop use
 st.set_page_config(layout="wide")
 
@@ -53,48 +60,30 @@ with file_upload:
                 df_below_lw = df[df['WTD_VS_LW']<(6/7)*100]
             df_below_lw['WTD_VS_LW'] = (df_below_lw['WTD_VS_LW'].astype(int)).astype(str) + '%'
             df_below_lw = df_below_lw[["LWPOSN", "POSITION", "TITLE", "ARTIST", "LABEL", "LW YT", "WTD", "FRI YT", "SAT YT", "SUN YT", "MON YT", "TUE YT", "WED YT", "THU YT", "WTD_VS_LW"]]      
-            st.dataframe(df_below_lw)
-            
+            st.dataframe(df_below_lw)            
+                
             st.write("Saturday less than half of Friday")
-            df_below_fri = df[df['SAT_VS_FRI']!=0]
-            df_below_fri = df[df['SAT_VS_FRI']<50]
-            df_below_fri['SAT_VS_FRI'] = (df_below_fri['SAT_VS_FRI'].astype(int)).astype(str) + '%'
-            df_below_fri = df_below_fri[["LWPOSN", "POSITION", "TITLE", "ARTIST", "LABEL", "FRI YT", "SAT YT", "SUN YT", "MON YT", "TUE YT", "WED YT", "THU YT", "SAT_VS_FRI"]] 
+            df_below_fri = less_than_half_prev(df, 'SAT_VS_FRI')
             st.dataframe(df_below_fri)
             
             st.write("Sunday less than half of Saturday")
-            df_below_sat = df[df['SUN_VS_SAT']!=0]
-            df_below_sat = df[df['SUN_VS_SAT']<50]
-            df_below_sat['SUN_VS_SAT'] = (df_below_sat['SUN_VS_SAT'].astype(int)).astype(str) + '%'
-            df_below_sat = df_below_sat[["LWPOSN", "POSITION", "TITLE", "ARTIST", "LABEL", "FRI YT", "SAT YT", "SUN YT", "MON YT", "TUE YT", "WED YT", "THU YT", "SUN_VS_SAT"]] 
+            df_below_sat = less_than_half_prev(df, 'SUN_VS_SAT')
             st.dataframe(df_below_sat)
             
             st.write("Monday less than half of Sunday")
-            df_below_sun = df[df['MON_VS_SUN']!=0]
-            df_below_sun = df[df['MON_VS_SUN']<50 ]
-            df_below_sun['MON_VS_SUN'] = (df_below_sun['MON_VS_SUN'].astype(int)).astype(str) + '%'
-            df_below_sun = df_below_sun[["LWPOSN", "POSITION", "TITLE", "ARTIST", "LABEL", "FRI YT", "SAT YT", "SUN YT", "MON YT", "TUE YT", "WED YT", "THU YT", "MON_VS_SUN"]] 
+            df_below_sun = less_than_half_prev(df, 'MON_VS_SUN')
             st.dataframe(df_below_sun)
             
             st.write("Tuesday less than half of Monday")
-            df_below_mon = df[df['TUE_VS_MON']!=0]
-            df_below_mon = df[df['TUE_VS_MON']<50]
-            df_below_mon['TUE_VS_MON'] = (df_below_mon['TUE_VS_MON'].astype(int)).astype(str) + '%'
-            df_below_mon = df_below_mon[["LWPOSN", "POSITION", "TITLE", "ARTIST", "LABEL", "FRI YT", "SAT YT", "SUN YT", "MON YT", "TUE YT", "WED YT", "THU YT", "TUE_VS_MON"]]   
+            df_below_mon = less_than_half_prev(df, 'TUE_VS_MON')
             st.dataframe(df_below_mon)
             
             st.write("Wednesday less than half of Tuesday")
-            df_below_tue = df[df['WED_VS_TUE']!=0]
-            df_below_tue = df[df['WED_VS_TUE']<50]
-            df_below_tue['WED_VS_TUE'] = (df_below_tue['WED_VS_TUE'].astype(int)).astype(str) + '%'
-            df_below_tue = df_below_tue[["LWPOSN", "POSITION", "TITLE", "ARTIST", "LABEL", "FRI YT", "SAT YT", "SUN YT", "MON YT", "TUE YT", "WED YT", "THU YT", "WED_VS_TUE"]] 
+            df_below_tue = less_than_half_prev(df, 'WED_VS_TUE')
             st.dataframe(df_below_tue)
             
             st.write("Thursday less than half of Wednesday")
-            df_below_wed = df[df['THU_VS_WED']!=0]
-            df_below_wed = df[df['THU_VS_WED']<50]
-            df_below_wed['THU_VS_WED'] = (df_below_wed['THU_VS_WED'].astype(int)).astype(str) + '%'
-            df_below_wed = df_below_wed[["LWPOSN", "POSITION", "TITLE", "ARTIST", "LABEL", "FRI YT", "SAT YT", "SUN YT", "MON YT", "TUE YT", "WED YT", "THU YT", "THU_VS_WED"]] 
+            df_below_wed = less_than_half_prev(df, 'THU_VS_WED')
             st.dataframe(df_below_wed)
     
     except ValueError:
