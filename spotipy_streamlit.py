@@ -6,7 +6,7 @@ from spotipy.oauth2 import SpotifyClientCredentials
 from PIL import Image
 
 # Import Functions from helper_functions.py file
-from helper_functions import (id_from_url
+from sp_helper_functions import (id_from_url
                             , convert_df_csv
                             , playlist_results
                             , album_results
